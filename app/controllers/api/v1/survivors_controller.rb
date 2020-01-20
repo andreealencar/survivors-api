@@ -33,6 +33,17 @@ module Api::V1
         render json: @survivor.last_location.errors, status: :unprocessable_entity
       end
     end
+
+    # POST /survivors/trade
+    def trade
+      result = Survivors::Trade.call(trade_params)
+  
+      if result.success?
+        head :no_content
+      else
+        render json: result.errors, status: :unprocessable_entity
+      end
+    end
   
     private
       def set_survivor
@@ -46,6 +57,15 @@ module Api::V1
           :gender,
           last_location_attributes: [:lat, :lng],
           items_attributes: [[:id, :quantity]])
+      end
+
+      def trade_params
+        params.require(:trade).permit(
+          :survivor_1_id,
+          :survivor_2_id,
+          survivor_1_items: [[:item_id, :quantity]],
+          survivor_2_items: [[:item_id, :quantity]]
+        ).to_h
       end
   
       def location_params

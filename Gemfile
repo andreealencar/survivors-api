@@ -28,6 +28,12 @@ gem "interactor", "~> 3.0"
 # Gem used to represent objects as JSON
 gem 'blueprinter'
 
+# Gem used to write advanced searches
+gem 'ransack'
+
+# Gem used to validate request params format
+gem 'json-schema'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 

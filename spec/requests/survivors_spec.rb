@@ -94,4 +94,44 @@ RSpec.describe "Survivors management", :type => :request do
       })
     end
   end
+
+  describe "POST - /api/v1/survivors/trade/" do
+    before(:each) do
+      @survivor_1 = create(:survivor)
+      @survivor_2 = create(:survivor)
+
+      @item_1 = create(:item, points: 4)
+      @item_2 = create(:item, points: 2)
+
+      InventoryItem.create([
+        { survivor: @survivor_1, item: @item_1, quantity: 1 },
+        { survivor: @survivor_2, item: @item_2, quantity: 2 }
+      ])
+
+      @valid_params = {
+        trade: {
+          survivor_1_id: @survivor_1.id,
+          survivor_2_id: @survivor_2.id,
+          survivor_1_items: [ { item_id: @item_1.id, quantity: 1 } ],
+          survivor_2_items: [ { item_id: @item_2.id, quantity: 2 } ]
+        }
+      }
+    end
+      
+    it "register survivor" do
+      post "/api/v1/survivors/trade/", params: @valid_params, as: :json
+
+      expect(response.status).to eq(204)
+    end
+
+    it "don`t register survivor" do
+      invalid_params = @valid_params.dup
+      invalid_params[:trade][:survivor_1_id] = 9999
+
+      post "/api/v1/survivors/trade/", params: invalid_params, as: :json
+
+      expect(response.status).to eq(422)
+      expect(JSON.parse(response.body)).to eq({"survivor_1_id"=>"not found"})
+    end
+  end
 end
