@@ -56,7 +56,8 @@ module Api::V1
           :age,
           :gender,
           last_location_attributes: [:lat, :lng],
-          items_attributes: [[:id, :quantity]])
+          items_attributes: [[:item_id, :quantity]]
+        ).to_h
       end
 
       def trade_params

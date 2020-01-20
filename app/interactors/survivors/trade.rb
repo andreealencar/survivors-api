@@ -74,13 +74,9 @@ module Survivors
       context.fail!(errors: { survivor_1_items: 'haven\'t item in inventory' }) if has_invalid_item?(survivor_1_items, survivor_1_id)
       context.fail!(errors: { survivor_2_items: 'haven\'t item in inventory' }) if has_invalid_item?(survivor_2_items, survivor_2_id)
 
-      if has_invalid_quantity_in?(survivor_1_items, survivor_1_id)
-        context.fail!(errors: { survivor_1_items: 'haven\'t item quantity in inventory' })
-      end
-
-      if has_invalid_quantity_in?(survivor_2_items, survivor_2_id)
-        context.fail!(errors: { survivor_2_items: 'haven\'t item quantity in inventory' })
-      end
+      
+      context.fail!(errors: { survivor_1_items: 'haven\'t item quantity in inventory' }) if has_invalid_quantity_in?(survivor_1_items, survivor_1_id)
+      context.fail!(errors: { survivor_2_items: 'haven\'t item quantity in inventory' }) if has_invalid_quantity_in?(survivor_2_items, survivor_2_id)
     end
 
     def has_invalid_item?(survivor_items, survivor_id)
