@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_140644) do
+ActiveRecord::Schema.define(version: 2020_01_20_035617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contamination_reports", force: :cascade do |t|
+    t.bigint "accuser_id", null: false
+    t.bigint "suspect_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["accuser_id", "suspect_id"], name: "index_contamination_reports_on_accuser_id_and_suspect_id", unique: true
+    t.index ["accuser_id"], name: "index_contamination_reports_on_accuser_id"
+    t.index ["suspect_id"], name: "index_contamination_reports_on_suspect_id"
+  end
 
   create_table "inventory_items", force: :cascade do |t|
     t.integer "quantity"
@@ -45,8 +55,11 @@ ActiveRecord::Schema.define(version: 2020_01_17_140644) do
     t.integer "age"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "infected", default: false
   end
 
+  add_foreign_key "contamination_reports", "survivors", column: "accuser_id"
+  add_foreign_key "contamination_reports", "survivors", column: "suspect_id"
   add_foreign_key "inventory_items", "items"
   add_foreign_key "inventory_items", "survivors"
   add_foreign_key "locations", "survivors"

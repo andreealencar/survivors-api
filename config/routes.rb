@@ -6,6 +6,8 @@ Rails.application.routes.draw do
         put :last_location, on: :member
         post :trade, on: :collection
       end
+
+      resources :contamination_reports, only: :create
     end
   end
 

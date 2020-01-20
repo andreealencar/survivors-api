@@ -3,6 +3,9 @@ class Survivor < ApplicationRecord
   has_one :last_location, class_name: "Location", foreign_key: :survivor_id
   has_many :inventory_items
   has_many :items, through: :inventory_items
+
+  has_many :accusers, class_name: 'ContaminationReport', foreign_key: :suspect_id
+  has_many :suspects, class_name: 'ContaminationReport', foreign_key: :accuser_id
   
   #== ACCEPTED ATTRIBUTES ==================================
   enum gender: { female: 'female', male: 'male' }
