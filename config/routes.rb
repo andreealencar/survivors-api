@@ -7,7 +7,15 @@ Rails.application.routes.draw do
         post :trade, on: :collection
       end
 
-      resources :contamination_reports, only: :create
+      resources :reports, only: [] do
+        collection do
+          post :contamination
+          get :lost_points
+          get :infected_percentage
+          get :not_infected_percentage
+          get :average_amount_items
+        end
+      end
     end
   end
 
