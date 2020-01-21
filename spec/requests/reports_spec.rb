@@ -13,7 +13,7 @@ RSpec.describe "Contamination Reports", :type => :request do
     }
       
     it "register contamination_report" do
-      post "/api/v1/reports/contamination", params: @valid_params
+      post "/api/v1/reports/contamination", params: @valid_params, as: :json
 
       expect(response.status).to eq(201)
     end
@@ -21,7 +21,7 @@ RSpec.describe "Contamination Reports", :type => :request do
     it "don`t register contamination_report" do
       invalid_params = @valid_params.dup
       invalid_params[:contamination_report][:suspect_id] = 9999
-      post "/api/v1/reports/contamination", params: invalid_params
+      post "/api/v1/reports/contamination", params: invalid_params, as: :json
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)).to eq({"suspect" => ["must exist", "can't be blank"]})

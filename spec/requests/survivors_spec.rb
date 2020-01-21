@@ -71,7 +71,7 @@ RSpec.describe "Survivors management", :type => :request do
     }
 
     it "update last location of survivor" do
-      put "/api/v1/survivors/#{@survivor.id}/last_location", params: @location_params
+      put "/api/v1/survivors/#{@survivor.id}/last_location", params: @location_params, as: :json
 
       expect(response.body).to eq(SurvivorBlueprint.render(@survivor))
       expect(response.status).to eq(200)
@@ -81,7 +81,7 @@ RSpec.describe "Survivors management", :type => :request do
       invalid = @location_params.dup
       invalid[:location][:lat] = nil
       
-      put "/api/v1/survivors/#{@survivor.id}/last_location", params: invalid
+      put "/api/v1/survivors/#{@survivor.id}/last_location", params: invalid, as: :json
 
       expect(response.status).to eq(422)
       expect(JSON.parse(response.body)).to eq({

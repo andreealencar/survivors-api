@@ -34,6 +34,9 @@ gem 'ransack'
 # Gem used to validate request params format
 gem 'json-schema'
 
+# Gem used for API documentation
+gem 'apipie-rails'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
